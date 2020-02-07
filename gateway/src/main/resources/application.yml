@@ -1,0 +1,22 @@
+#对外暴露的端口地址
+server:
+  port: 10086
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        #路由id
+        - id: user-service-route
+          uri: http://127.0.0.1:9090
+          #路由断言，可以匹配映射的路径
+          predicates:
+            #- Path=/api/user/**  #发送请求  http://localhost/api/user/1
+            - Path=/api/abc/user/**  #发送请求  http://localhost/api/abc/user/2
+          filters:
+            - StripPrefix=2
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:9092/eureka/
